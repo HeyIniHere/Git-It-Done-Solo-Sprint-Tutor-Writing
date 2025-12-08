@@ -1,23 +1,37 @@
-document.getElementById("createRequestForm").addEventListener("submit", function(e){
-    e.preventDefault();
-    alert("Sumbit Clicked!");
+document.addEventListener("DOMContentLoaded", () => {
 
-    const request_title = document.getElementById("title").value;
-    const prof = document.getElementById("prof_name").value;
-    // const email = document.getElementById("prof_email").value;
-    // const desc = document.getElementById("course_desc").value;
+    document.getElementById("createRequestForm").addEventListener("submit", function(e){
+        e.preventDefault();
+        // alert("Sumbit Clicked!");
 
-
-    const template = document.getElementById("request_card_temp");
-    const card = template.content.cloneNode(true);
+        const request_title = document.getElementById("title").value;
+        const prof = document.getElementById("prof_name").value;
+        // const email = document.getElementById("prof_email").value;
+        // const desc = document.getElementById("course_desc").value;
 
 
-    card.querySelector(".card_title").textContent = request_title;
-    card.querySelector(".card_prof").textContent = prof;
-    // card.querySelector().textContent = email;
-    // card.querySelector().textContent = desc;
+        if(!request_title || !prof){
+            return;
+        }
 
-    document.getElementById("request_grid").appendChild(card);
+        const template = document.getElementById("request_card_temp");
+        const card = template.content.cloneNode(true);
 
 
+        card.querySelector(".card_title").textContent = request_title;
+        card.querySelector(".card_prof").textContent = prof;
+        // card.querySelector().textContent = email;
+        // card.querySelector().textContent = desc;
+
+        document.getElementById("request_grid").appendChild(card);
+        document.getElementById("createRequestForm").reset();
+
+        
+        const modal = document.getElementById("createRequestForm");
+        modal.classList.remove("show");
+        modal.style.display = "none";
+
+        this.reset()
+    });
 });
+
