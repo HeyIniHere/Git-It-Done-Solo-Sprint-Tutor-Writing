@@ -73,7 +73,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link  " href="../templates/faculty-tutor-catalog.html">
+          <a class="nav-link  " href="{{ url_for('main.tutor_catalog') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg fill="#000000" height="70%" width="70%" version="1.1" id="XMLID_237_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                   viewBox="0 0 24 24" xml:space="preserve">
@@ -235,24 +235,28 @@
         <div class="tutor-grid-container card p-4 ">
           <div id="tutor_grid" class="tutor_grid mt-4">
 
-            <template id="tutor_card_temp">
               <div class="card-wrapper mb-4"> 
+
+                {% for tutor in tutors %}
                 <div class="card shadow tutor_card">
                   <div class="card-header pb-0 p-3">
-                    <h6 class="card_title" id="request_title" class="mb-0">Tutor Name</h6>
+                    <h5 class="card_title" id="request_title" class="mb-0">{{ tutor.name}}</h5>
                   </div>
                   <div class="card-body pb-0 p-3">
-                    <p class="experience">W1, W2 </p>
-                    <p class="about_me">About Me </p>
-                    <p class="rating">/5</p>
+                    <p class="card_content"><strong>Majors:</strong>{{ tutor.majors}}</p>
+                    <p class="card_content"><strong>Minors:</strong>{{ tutor.minors}}</p>
+                    <p class="card_content"><strong>Interests:</strong>{{ tutor.interests}}</p>
+                    <p class="card_content"><strong>Languages:</strong>{{ tutor.languages}}</p>
+                    <p class="card_content"><strong>Pronouns:</strong>{{ tutor.pronouns}}</p>
+                    <p class="card_content"><strong>Hometown</strong>{{ tutor.hometown}}</p>
                   </div>
                   
                   <div class="card-footer pt-0 p-3 d-flex align-items-center">
                     <div class="w-60">
                   </div>
+                  {% endfor %}
                 </div>
               </div>
-            </template>
           </div>
         </div>
       </div>
@@ -264,7 +268,7 @@
   </main>
      
   <!--   Core JS Files   -->
-  <script src="../static/js/tutor_catalog.js"></script>
+  <!-- <script src="../static/js/tutor_catalog.js"></script> -->
   <script src="../static/js/core/popper.min.js"></script>
   <script src="../static/js/core/bootstrap.min.js"></script>
   <script src="../static/js/plugins/perfect-scrollbar.min.js"></script>

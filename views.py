@@ -2,7 +2,7 @@ import flash
 from flask import Blueprint, render_template
 from flask import request, redirect, url_for, current_app, render_template, jsonify, send_from_directory
 
-from models import db, TutorRequest
+from models import db, TutorRequest, TutorProfile
 
 
 main_blueprint = Blueprint('main', __name__)
@@ -35,3 +35,10 @@ def create_tutor_request():
     db.session.add(new_request)
     db.session.commit()
     return redirect(url_for('main.home'))
+
+
+@main_blueprint.route("/faculty-tutor-catalog")
+def tutor_catalog():
+    tutors = TutorProfile.query.all()
+    
+    return render_template('faculty-tutor-catalog.html', tutors=tutors)
