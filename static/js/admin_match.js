@@ -7,8 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(data => {
             data.forEach(request => {
                 const requestRow = document.createElement("div");
-                requestRow.classList.add("request-row");
+                requestRow.classList.add("request-row", "mb-4");
                 requestRow.requestId = request.id;
+
+                let selectedTutorId = null;
 
                 const requestContent = document.createElement("div");
                 requestContent.classList.add("request-content");
@@ -19,53 +21,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 const topTutorContainer = document.createElement("div");
-                topTutorContainer.classList.add("suggested-tutors");
+                topTutorContainer.classList.add("suggested-tutors", "mb-2");
 
-                request.suggestedTutors.forEach(tutor => {
-                    const tutorSelectBtn = document.createElement("button");
-                    tutorSelectBtn.classList.add("tutor-select-btn");
-                    tutorSelectBtn.innerText = tutor.name;
-                    tutorSelectBtn.dataset.tutorId = tutor.id;
+                const operationDiv = document.createElement("div");
+                operationDiv.classList.add("operation-btns", "d-none");
 
-                    tutorSelectBtn.addEventListener("click", () => {
-                        requestRow.querySelectorAll(".operation-btns").forEach(e => e.remove());
+                const confirmBtn = document.createElement("button");
+                confirmBtn.innerText = "Confirm";
+                confirmBtn.classList.add("confirm-btn");
 
-                        const operationDiv = document.createElement("div");
-                        operationDiv.classList.add("operation-btns");
-
-                        const confirmBtn = document.createElement("button");
-                        confirmBtn.innerText = "Confirm";
-                        confirmBtn.classList.add("confirm-btn");
-
-                        confirmBtn.addEventListener("click", () => {
-                            fetch("/api/confirm-match", { method: "POST" })
-                                .then(response => response.json())
-                                .then(data => {
-                                    alert(data.message)
-                                });
+                confirmBtn.addEventListener("click", () => {
+                        fetch("/api/confirm-match", { method: "POST",
+                            body : JSON.stringify({
+                                request_id : request.id,
+                                tutor_id : selectedTutorId
+                            })
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                alert(data.message)
+                            });
                         });
 
-                        const cancelBtn = document.createElement("button");
-                        cancelBtn.innerText = "Cancel";
-                        cancelBtn.classList.add("cancel-btn");
-                        cancelBtn.addEventListener("click", () => operationDiv.remove());
+                    const cancelBtn = document.createElement("button");
+                    cancelBtn.innerText = "Cancel";
+                    cancelBtn.classList.add("cancel-btn");
+                    cancelBtn.addEventListener("click", () => {  
+                        selectedTutorId = null;
+                        operationDiv.classList.add("d-none");
 
-                        operationDiv.append(confirmBtn, cancelBtn);
-                        requestRow.appendChild(operationDiv);
+                        topTutorContainer.querySelectorAll(".tutor-select-btn").forEach(btn => btn.classList.remove("active"));
 
                     });
+                        
+                    operationDiv.append(confirmBtn, cancelBtn);
 
-                    topTutorContainer.appendChild(tutorSelectBtn);
-                });
+                    request.suggestedTutors.forEach(tutor => {
+                        const tutorSelectBtn = document.createElement("button");
+                        tutorSelectBtn.classList.add("tutor-select-btn");
+                        tutorSelectBtn.innerText = tutor.name;
+                        tutorSelectBtn.dataset.tutorId = tutor.id;
 
+                        tutorSelectBtn.addEventListener("click", () => {
+                            selectedTutorId = tutor.id;
 
-                requestRow.appendChild(requestContent);
-                requestRow.appendChild(topTutorContainer);
-                requestContainer.appendChild(requestRow);
+                            topTutorContainer.querySelectorAll(".tutor-select-btn").forEach(btn => btn.classList.remove("active"));
+                            tutorSelectBtn.classList.add("active");
+                            operationDiv.classList.remove("d-none");    
 
+                        });
+                        
+                        topTutorContainer.appendChild(tutorSelectBtn);
 
+                    });
+                    requestRow.appendChild(requestContent, topTutorContainer, operationDiv);
+                    requestContainer.appendChild(requestRow);
+                
 
-            });
         });
+    });
 
 });
