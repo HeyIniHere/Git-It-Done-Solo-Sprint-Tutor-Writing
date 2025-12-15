@@ -252,9 +252,18 @@
                         </div>
 
                         <div class="mb-3">
-                          <label class="form-label">Requested Tutor</label>
-                          <input type="text" name="requested_tutor" class="form-control" optional>
+                          <label class="form-label">Requested Tutor (optional)</label>
+                          <select name="requested_tutor" class="form-select">
+                            <option value="">No preference</option>
+
+                            {% for tutor in tutors %}
+                              <option value="{{ tutor.id }}">
+                                {{ tutor.name }} — {{ tutor.classYear }}
+                              </option>
+                            {% endfor %}
+                          </select>
                         </div>
+
 
                         <div class="mb-3">
                           <label class="form-label">Course Description</label>

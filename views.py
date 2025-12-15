@@ -55,7 +55,8 @@ def find_suggested_tutors(tutor_request, limit=5):
 
 @main_blueprint.route('/')
 def home():
-    return render_template('faculty-requests.html')
+    tutors = TutorProfile.query.filter_by(active=True).order_by(TutorProfile.name).all()
+    return render_template('faculty-requests.html', tutors=tutors)
 
 
 @main_blueprint.route('/new_tutor_request', methods=['POST'])
