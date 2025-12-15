@@ -76,8 +76,9 @@ def admin_top_matches():
         response.append({
             "request_id": tutor_request.id,
             "courseName": tutor_request.courseName,
-            "facultyName": tutor_request.facultyName,
-            "suggestions": suggestion_data
+            "professorName": tutor_request.facultyName,
+            "details": tutor_request.courseDescription,
+            "suggestedTutors": suggestion_data
         })
 
     return jsonify(response), 200

@@ -89,6 +89,62 @@
 
 }
 
+.request-row.card {
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1rem;
+    transition: transform 0.2s;
+}
+
+.request-row.card:hover {
+    transform: translateY(-2px);
+}
+
+.suggested-tutors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem; 
+}
+
+.tutor-select-btn {
+    flex: 1 1 auto;
+    min-width: 120px;
+    text-align: center;
+}
+
+.tutor-select-btn.active {
+    color: white;
+}
+
+.operation-btns {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.confirm-btn {
+    min-width: 100px;
+}
+
+.confirm-btn:hover, .cancel-btn:hover{
+    transform: translateY(-2px);
+}
+
+.cancel-btn {
+    min-width: 100px;
+}
+
+/* Optional: make card content a little cleaner */
+.request-content h5 {
+    font-size: 1.1rem;
+    margin-bottom: 0.3rem;
+}
+
+.request-content p {
+    font-size: 0.95rem;
+    color: #555;
+}
+
 
 @media (min-width: 768px) {
     .tutor_grid{
