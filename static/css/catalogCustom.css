@@ -46,6 +46,7 @@
 
 .tutor-card{
     height: 100%;
+    width: 100%;
     display : flex;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     flex-direction: column;
@@ -61,11 +62,6 @@
 }
 
 
-#tutor_grid > .col-lg-4,
-#tutor_grid > .col-md-6,
-#tutor_grid > .col-12 {
-    display: flex;
-}
 
 .tutor-card:hover{
     transform: translateY(-5px);
