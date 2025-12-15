@@ -24,6 +24,18 @@
 
 }
 
+.request-container{
+    margin: 2rem 0 1rem 0;
+}
+
+.request_card{
+    margin-bottom: 1rem;
+}
+
+#request_grid{
+    padding: 1rem;
+}
+
 .tutor_grid{
     width: 100%;
     display : grid;
