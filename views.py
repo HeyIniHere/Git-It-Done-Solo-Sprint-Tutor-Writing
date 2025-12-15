@@ -16,8 +16,14 @@ def find_suggested_tutors(tutor_request, limit=5):
     tutors = TutorProfile.query.filter_by(active=True).all()
     suggestions = []
 
-    requested_name = tutor_request.requestedTutor.lower() if tutor_request.requestedTutor else None
+    requested_id = tutor_request.requestedTutorId if tutor_request.requestedTutorId else None
     course_text = tutor_request.courseName.lower() + " " + tutor_request.courseDescription.lower()
+    requested_name = None
+    
+    if requested_id:
+        requested_tutor = TutorProfile.query.get(requested_id)
+        if requested_tutor:
+            requested_name = requested_tutor.name.lower()
 
     for tutor in tutors:
         score = 0
@@ -52,6 +58,30 @@ def find_suggested_tutors(tutor_request, limit=5):
     suggestions.sort(key=lambda x: x[1], reverse=True)
     return suggestions[:limit]
 
+
+@main_blueprint.route('/api/v1/admin-top-matches', methods=['GET'])
+def admin_top_matches():
+    requests = TutorRequest.query.filter_by(requestStatus="Open").all()
+    response = []
+
+    for tutor_request in requests:
+        suggestions = find_suggested_tutors(tutor_request)
+        suggestion_data = [{
+            "tutor_id": tutor.id,
+            "tutor_name": tutor.name,
+            "score": score,
+            "reasons": reasons
+        } for tutor, score, reasons in suggestions]
+
+        response.append({
+            "request_id": tutor_request.id,
+            "courseName": tutor_request.courseName,
+            "professorName": tutor_request.facultyName,
+            "details": tutor_request.courseDescription,
+            "suggestedTutors": suggestion_data
+        })
+
+    return jsonify(response), 200
 
 @main_blueprint.route('/')
 def home():
