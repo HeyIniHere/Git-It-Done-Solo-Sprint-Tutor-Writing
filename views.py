@@ -2,6 +2,7 @@ from flask import Blueprint, render_template
 from flask import request, flash, redirect, url_for, current_app, render_template, jsonify, send_from_directory
 from models import db, TutorRequest, TutorProfile, TutorAssignment
 from flask_login import current_user
+from matching import generate_suggested_matches
 
 
 main_blueprint = Blueprint('main', __name__)
@@ -104,6 +105,18 @@ def admin_matching():
     # tutors = TutorProfile.query.all()
     
     return render_template('admin-matching.html')
+
+@main_blueprint.route("/admin/match/<int:request_id>", methods=["GET"])
+def match_request(request_id):
+    request = TutorRequest.query.get(request_id)
+    matches = generate_suggested_matches(request)
+
+    # Convert to JSON
+    data = [
+        {"tutorName": m[0].name, "score": round(m[1]*100, 1)}
+        for m in matches
+    ]
+    return jsonify(data)
 
 @main_blueprint.route("/messages", methods=["GET"])
 def admin_messages():
