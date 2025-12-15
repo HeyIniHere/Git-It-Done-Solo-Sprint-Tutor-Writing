@@ -62,6 +62,6 @@ class TutorAssignment(db.Model, UserMixin):
     
     id = db.Column(db.Integer, primary_key=True)
     
-    tutor_id = db.Column(db.Integer, db.ForeignKey("tutor.id"), nullable=False)
-    request_id = db.Column(db.Integer, db.ForeignKey("tutor_request.id"), nullable=False)
+    tutor_id = db.Column(db.Integer, db.ForeignKey("tutorProfile.id"), nullable=False)
+    request_id = db.Column(db.Integer, db.ForeignKey("tutorRequest.id"), nullable=False)
     assigned_at = db.Column(db.DateTime, default=datetime.utcnow)
