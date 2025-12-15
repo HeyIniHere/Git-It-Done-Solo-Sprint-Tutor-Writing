@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         topTutorContainer.appendChild(tutorSelectBtn);
 
                     });
-                    requestRow.appendChild(requestContent, topTutorContainer, operationDiv);
+                    requestRow.append(requestContent, topTutorContainer, operationDiv);
                     requestContainer.appendChild(requestRow);
                 
 
