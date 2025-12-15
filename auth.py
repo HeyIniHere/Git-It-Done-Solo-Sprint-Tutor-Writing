@@ -3,10 +3,10 @@ from flask import (
     request, flash, current_app
 )
 from flask_login import login_user, logout_user, login_required, current_user
-from authlib.integrations.flask_client import OAuth
+# from authlib.integrations.flask_client import OAuth
 from models import db, User
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 # Blueprint
 auth_blueprint = Blueprint('auth', __name__, url_prefix="/auth")
