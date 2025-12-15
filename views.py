@@ -1,7 +1,7 @@
-import flash
 from flask import Blueprint, render_template
-from flask import request, redirect, url_for, current_app, render_template, jsonify, send_from_directory
+from flask import request, flash, redirect, url_for, current_app, render_template, jsonify, send_from_directory
 from models import db, TutorRequest, TutorProfile, TutorAssignment
+from flask_login import current_user
 
 
 main_blueprint = Blueprint('main', __name__)
@@ -56,34 +56,37 @@ def find_suggested_tutors(tutor_request, limit=5):
 @main_blueprint.route('/')
 def home():
     tutors = TutorProfile.query.filter_by(active=True).order_by(TutorProfile.name).all()
-    return render_template('faculty-requests.html', tutors=tutors)
+    requests = TutorRequest.query.order_by(TutorRequest.created_at.desc()).all()
+    return render_template('faculty-requests.html', tutors=tutors, requests=requests)
 
 
 @main_blueprint.route('/new_tutor_request', methods=['POST'])
 def create_tutor_request():
-    
-    ## auth
-    
+
     new_request = TutorRequest(
-        professor_id=request.form['professor_id'],
-        
+        # professor_id=current_user.id,  # REQUIRED
         courseName=request.form['courseName'],
         facultyName=request.form['facultyName'],
         facultyEmail=request.form['facultyEmail'],
-        requestedTutor=request.form['requestedTutor'],
+        requestedTutorId=request.form.get('requestedTutorId'),
         courseDescription=request.form['courseDescription'],
         requestStatus="Open"
     )
-        
-    
-    flash('Tutor request created successfully!')
-    
+
     db.session.add(new_request)
     db.session.commit()
-    return redirect(url_for('main.home'))
+
+    # flash("Tutor request created successfully!")
+
+    return jsonify({
+        "id": new_request.id,
+        "courseName": new_request.courseName,
+        "facultyName": new_request.facultyName,
+        "requestStatus": new_request.requestStatus
+    }), 201
 
 
-@main_blueprint.route("/faculty-tutor-catalog")
+@main_blueprint.route("/faculty-tutor-catalog", methods=["GET"])
 def tutor_catalog():
     tutors = TutorProfile.query.all()
     
@@ -96,13 +99,13 @@ def admin_dashboard():
     
     return render_template('admin-dashboard.html')
 
-@main_blueprint.route("/admin-matching")
+@main_blueprint.route("/admin-matching", methods=["GET"])
 def admin_matching():
     # tutors = TutorProfile.query.all()
     
     return render_template('admin-matching.html')
 
-@main_blueprint.route("/messages")
+@main_blueprint.route("/messages", methods=["GET"])
 def admin_messages():
     # tutors = TutorProfile.query.all()
     

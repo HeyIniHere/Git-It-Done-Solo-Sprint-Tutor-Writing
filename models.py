@@ -47,7 +47,7 @@ class TutorRequest(db.Model):
     __tablename__ = "tutorRequest"
     id = db.Column(db.Integer, primary_key=True)
     
-    professor_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    professor_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=True)
     courseName = db.Column(db.String(200), nullable=False)
     facultyName = db.Column(db.String(200), nullable=False)
     facultyEmail = db.Column(db.String(200), nullable=False)
