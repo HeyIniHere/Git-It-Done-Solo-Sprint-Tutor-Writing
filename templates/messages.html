@@ -69,11 +69,11 @@
               </svg>
 
             </div>
-            <span class="nav-link-text ms-1">Faculty Dashboard</span>
+            <span class="nav-link-text ms-1">Admin Dashboard</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="{{ url_for('main.tutor_catalog') }}">
+          <a class="nav-link  " href="{{ url_for('main.tutor_catalog') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg fill="#000000" height="70%" width="70%" version="1.1" id="XMLID_237_" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
                   viewBox="0 0 24 24" xml:space="preserve">
@@ -89,7 +89,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('main.home') }}">
+          <a class="nav-link bg-secondary-subtle" href="../templates/billing.html">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24" viewBox="0 0 24 24" width="24">
                 <rect fill="none" height="24" width="24"/>
@@ -120,7 +120,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('main.admin_messages') }}">
+          <a class="nav-link active "href="{{ url_for('main.admin_messages') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="70%" height="70%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <title>Messages</title>
@@ -159,7 +159,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('auth.signIn') }}">
+          <a class="nav-link " href="{{ url_for('auth.signIn') }}">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <title>document</title>
@@ -188,10 +188,10 @@
       <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
-            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Faculty</a></li>
-            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Tutor Catalog</li>
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Admin</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Messages</li>
           </ol>
-          <h6 class="font-weight-bolder mb-0">Tutor Catalog</h6>
+          <h6 class="font-weight-bolder mb-0">Messages</h6>
         </nav>
         <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
           <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -207,65 +207,34 @@
                   <i class="sidenav-toggler-line"></i>
                 </div>
               </a>
-            </li>
-            
-            
-                
-                
+            </li>       
           </ul>
         </div>
       </div>
     </nav>
+
     <!-- End Navbar -->
     <div class="container-fluid py-4">
       <div class="row">
         <div class="col-lg-6 col-12">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-12">
+            <div class="card-container">
+                <div class="card header pb-0">
+                    <h6>Pending Tutor Requests</h6>
+                </div>
 
-              <div class="nav-item d-flex align-items-center">
-                <button id="filter-btn" class="btn btn-outline-primary btn-sm mb-0 "><i class="fa fa-sliders fa-3x me-2"></i>Filter</button>
-              </div>                 
-                      
+                <div class="card-body">
+                    <div id="requests-container"></div>
+                    
+                </div>
             </div>
-            
-          </div>
-        </div>
-        
-        <div class="tutor-grid-container card p-4 ">
-          <div id="tutor_grid" class="row mt-4">
-            {% for tutor in tutors %}
-            <div class="col-lg-4 col-md-6 col-12 mb-4">
-              <div class="card shadow tutor_card">
-                <div class="card-header pb-0 p-3">
-                  <h5 class="card_title mb-0">{{ tutor.name }}</h5>
-                </div>
-                <div class="card-body pb-0 p-3">
-                  <p class="card_content"><strong>Majors:</strong>{{ tutor.majors }}</p>
-                  <p class="card_content"><strong>Minors:</strong>{{ tutor.minors }}</p>
-                  <p class="card_content"><strong>Interests:</strong>{{ tutor.interests }}</p>
-                  <p class="card_content"><strong>Languages:</strong>{{ tutor.languages }}</p>
-                  <p class="card_content"><strong>Pronouns:</strong>{{ tutor.pronouns }}</p>
-                  <p class="card_content"><strong>Hometown:</strong>{{ tutor.hometown }}</p>
-                </div>
-                <div class="card-footer pt-0 p-3 d-flex align-items-center">
-                  <div class="w-60"></div>
-                </div>
-              </div>
-            </div>
-            {% endfor %}
-          </div> 
-        </div>
+          
+        </div>    
       </div>
-      
-      
-      
-      
     </div>
   </main>
      
   <!--   Core JS Files   -->
-  <!-- <script src="../static/js/tutor_catalog.js"></script> -->
+  <script src="../static/js/admin_match.js"></script>
   <script src="../static/js/core/popper.min.js"></script>
   <script src="../static/js/core/bootstrap.min.js"></script>
   <script src="../static/js/plugins/perfect-scrollbar.min.js"></script>
